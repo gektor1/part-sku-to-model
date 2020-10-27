@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Purei_PartSkuToModel::purei" title="Purei" translate="title"
+             module="Purei_PartSkuToModel" sortOrder="51"
+             dependsOnModule="Purei_PartSkuToModel"
+             resource="Purei_PartSkuToModel::purei"/>
+        
+        <add id="Purei_PartSkuToModel::purei_importexport" title="Import / Export part_sku_to_model" translate="title"
+             module="Purei_PartSkuToModel" parent="Purei_PartSkuToModel::purei" sortOrder="10"
+             dependsOnModule="Purei_PartSkuToModel" action="purei_partskutomodel/importexport"
+             resource="Purei_PartSkuToModel::purei"/>
+    </menu>
+</config>

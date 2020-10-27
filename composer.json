@@ -26,6 +26,6 @@
             "Purei\\PartSkuToModel\\": ""
         }
     },
-    "minimum-stability": "alpha",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

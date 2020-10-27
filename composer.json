@@ -1,25 +1,31 @@
 {
-  "name": "purei/magento-2-part-sku-to-model-extension",
-  "description": "Magento 2 - part_sku_to_model import / export",
-  "require": {
-    "php": "~5.5.0|~5.6.0|~7.0.0"
-  },
-  "type": "magento2-module",
-  "version": "1.0.1",
-  "authors": [
-    {
-      "name": "Dmytro Medvediev",
-      "email": "gektor1@gmail.com",
-      "homepage": "https://github.com/gektor1",
-      "role": "Developer"
-    }
-  ],
-  "autoload": {
-    "files": [
-      "registration.php"
+    "name": "purei/magento-2-part-sku-to-model-extension",
+    "description": "Magento 2 - part_sku_to_model import / export",    
+    "type": "magento2-module",
+    "version": "1.0.1",
+    "homepage": "https://github.com/gektor1/part-sku-to-model",
+    "authors": [
+        {
+            "name": "Dmytro Medvediev",
+            "email": "gektor1@gmail.com",
+            "homepage": "https://github.com/gektor1",
+            "role": "Developer"
+        }
     ],
-    "psr-4": {
-      "Purei\\PartSkuToModel\\": ""
-    }
-  }
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "require": {
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Purei\\PartSkuToModel\\": ""
+        }
+    },
+    "minimum-stability": "alpha",
+    "prefer-stable": true
 }

@@ -13,7 +13,7 @@ class ExportPost extends \Purei\PartSkuToModel\Controller\Adminhtml\ImportExport
      * @return ResponseInterface
      */
     public function execute() {
-        $template = '"{{sku}}","{{description}}","{{model}}"';
+        /*$template = '"{{sku}}","{{description}}","{{model}}"';
         $collection = $this->_objectManager->create(
                 \Purei\PartSkuToModel\Model\ResourceModel\PartSkuToModel\Collection::class
         );
@@ -21,7 +21,15 @@ class ExportPost extends \Purei\PartSkuToModel\Controller\Adminhtml\ImportExport
         $content = 'sku,description,model' . PHP_EOL;
         while ($partSkuToModel = $collection->fetchItem()) {
             $content .= $partSkuToModel->toString($template) . "\n";
-        }
+        }*/
+        
+        /** @var $importHandler \Purei\PartSkuToModel\Model\PartSkuToModel\CsvImportHandler */
+        $importHandler = $this->_objectManager->create(
+                \Purei\PartSkuToModel\Model\PartSkuToModel\CsvExportHandler::class
+        );
+
+        $content = $importHandler->exportToCsvString();
+
         return $this->fileFactory->create('part_sku_to_model_Export.csv', $content, DirectoryList::VAR_DIR);
     }
 

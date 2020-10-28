@@ -1,42 +1,89 @@
 <div class="import-export-part-sku-to-model">
-    <?php if (!$block->getIsReadonly()): ?>
-        <div class="import-part-sku-to-model">
-            <?php if ($block->getUseContainer()): ?>
-                <form id="import-form"
-                      class="admin__fieldset"
-                      action="<?= $block->escapeUrl($block->getUrl('purei_partskutomodel/importexport/importPost')) ?>"
-                      method="post"
-                      enctype="multipart/form-data">
-                      <?php endif; ?>
-                      <?= $block->getBlockHtml('formkey') ?>
-                <div class="fieldset admin__field">
-                    <label for="import_part_sku_to_model_file" class="admin__field-label">
-                        <span><?= $block->escapeHtml(__('Import part_sku_to_model')) ?></span>
+    <div class="import-part-sku-to-model">
+        <form id="import-form"
+              action="<?= $block->escapeUrl($block->getUrl('purei_partskutomodel/importexport/importPost')) ?>"
+              method="post"
+              enctype="multipart/form-data">
+                  <?= $block->getBlockHtml('formkey') ?>
+            <fieldset class="fieldset admin__fieldset">
+                <legend class="admin__legend legend">
+                    <span>Import</span>
+                </legend><br>
+                <div class="admin__field field field-theme_id  required _required">
+                    <label class="label admin__field-label" for="import_part_sku_to_model_delimiter">
+                        <span>
+                            Delimiter
+                        </span>
                     </label>
-                    <div class="admin__field-control">
-                        <input type="file"
-                               id="import_part_sku_to_model_file"
-                               name="import_part_sku_to_model_file"
-                               class="input-file required-entry"/>
-                               <?= $block->getButtonHtml(__('Import part_sku_to_model'), '', 'import-submit') ?>
+                    <div class="admin__field-control control">
+                        <select id="import_part_sku_to_model_delimiter" name="import_part_sku_to_model_delimiter"
+                                class="required-entry _required select admin__control-select">
+                            <option value="comma">comma delimited</option>
+                            <option value="tab">tab separated</option>
+                        </select>
                     </div>
                 </div>
-                <?php if ($block->getUseContainer()): ?>
-                </form>
-            <?php endif; ?>
-            <?php $scriptString = <<<script
+                <div class="admin__field field field-import_part_sku_to_model_file  required _required">
+                    <label class="label admin__field-label" for="import_part_sku_to_model_file">
+                        <span>CSV File</span>
+                    </label>
+                    <div class="admin__field-control control">
+                        <input id="import_part_sku_to_model_file"
+                               name="import_part_sku_to_model_file"
+                               title="CSV File" type="file"
+                               class="required-entry _required">               
+                    </div>
+                </div>
+                <div class="admin__field field field-import  with-addon no-label">
+                    <div class="admin__field-control control">
+                        <div class="admin__field">
+                            <?= $block->getButtonHtml(__('Submit'), '', 'import-submit') ?>
+                        </div>                  
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <hr />
+    <div class="export-part-sku-to-model <?= ($block->getIsReadonly()) ? 'box-left' : 'box-right' ?>">
+        <form id="export_form"
+              class="admin__fieldset"
+              action="<?= $block->escapeUrl($block->getUrl('purei_partskutomodel/importexport/exportPost')) ?>"
+              method="post">
+                  <?= $block->getBlockHtml('formkey') ?>
+            <fieldset class="fieldset admin__fieldset">
+                <legend class="admin__legend legend">
+                    <span>Export</span>
+                </legend><br>
+                <div class="fieldset admin__field">
+                    <div class="admin__field-control">
+                        <?= $block->getButtonHtml(__('Submit'), '', 'export-submit') ?>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<?php $scriptString = <<<script
 
     require(['jquery', 'Magento_Ui/js/modal/alert', "mage/mage", "loadingPopup", 'mage/translate'],
         function(jQuery, uiAlert){
-
     jQuery('#import-form').mage('form').mage('validation');
     (function ($) {
+        
+        $('.export-submit').click(function(){
+            $('body').loadingPopup({
+                timeout: 1000
+            });
+            $(this.form).submit();
+        });
+        
         $('.import-submit').click(function(){
             if($(':input[name="import_part_sku_to_model_file"]').val()) {
                 $('body').loadingPopup({
                     timeout: false
                 });
-
                 $(this.form).submit();
             } else {
                 uiAlert({
@@ -45,31 +92,7 @@
             }
         });
     })(jQuery);
-
 });
-
 script;
-            ?>
-            <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
-        </div>
-    <?php endif; ?>
-    <div class="export-part-sku-to-model <?= ($block->getIsReadonly()) ? 'box-left' : 'box-right' ?>">
-        <?php if ($block->getUseContainer()): ?>
-            <form id="export_form"
-                  class="admin__fieldset"
-                  action="<?= $block->escapeUrl($block->getUrl('purei_partskutomodel/importexport/exportPost')) ?>"
-                  method="post"
-                  enctype="multipart/form-data">
-                  <?php endif; ?>
-                  <?= $block->getBlockHtml('formkey') ?>
-            <div class="fieldset admin__field">
-                <span class="admin__field-label"><span><?= $block->escapeHtml(__('Export part_sku_to_model')) ?></span></span>
-                <div class="admin__field-control">
-                    <?= $block->getButtonHtml(__('Export part_sku_to_model'), "export_form.submit()") ?>
-                </div>
-            </div>
-            <?php if ($block->getUseContainer()): ?>
-            </form>
-        <?php endif; ?>
-    </div>
-</div>
+        ?>
+        <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>

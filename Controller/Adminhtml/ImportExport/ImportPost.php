@@ -13,6 +13,7 @@ class ImportPost extends \Purei\PartSkuToModel\Controller\Adminhtml\ImportExport
      */
     public function execute() {
         $importFile = $this->getRequest()->getFiles('import_part_sku_to_model_file');
+        $delimiter = $this->getRequest()->getParam('import_part_sku_to_model_delimiter');
 
         if ($this->getRequest()->isPost() && isset($importFile['tmp_name'])) {
             try {
@@ -21,7 +22,16 @@ class ImportPost extends \Purei\PartSkuToModel\Controller\Adminhtml\ImportExport
                 $importHandler = $this->_objectManager->create(
                         \Purei\PartSkuToModel\Model\PartSkuToModel\CsvImportHandler::class
                 );
-                $importHandler->importFromCsvFile($importFile);
+                
+                $delimiters = array(
+                    'comma'     => ',',
+                    'semicolon' => ';',
+                    'tab'         => "\t",
+                    'pipe'         => '|',
+                    'colon'     => ':'
+                );
+                
+                $importHandler->importFromCsvFile($importFile, $delimiters[$delimiter]);
 
                 $this->messageManager->addSuccess(__('The part_sku_to_model has been imported.'));
             } catch (\Magento\Framework\Exception\LocalizedException $e) {

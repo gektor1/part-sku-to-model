@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_ImportExport:etc/import.xsd">
+    <entity name="part_sku_to_model" label="Part Sku To Model"
+            model="Purei\PartSkuToModel\Model\Import\PartSkuToModel"
+            behaviorModel="Purei\PartSkuToModel\Model\Source\Import\Behavior\Basic" />
+</config>
